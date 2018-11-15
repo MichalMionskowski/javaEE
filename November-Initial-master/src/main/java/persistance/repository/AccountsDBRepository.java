@@ -1,10 +1,12 @@
 package persistance.repository;
 
-import static javax.transaction.Transactional.TxType.SUPPORTS;
 import static javax.transaction.Transactional.TxType.REQUIRED;
+import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 import java.util.List;
 
+import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -12,8 +14,9 @@ import javax.transaction.Transactional;
 
 import persistance.domain.Accounts;
 
+@Default
 @Transactional(SUPPORTS)
-public class AccountsOperations {
+public class AccountsDBRepository implements AccountRepository {
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
 	
@@ -26,20 +29,26 @@ public class AccountsOperations {
 		TypedQuery<Accounts> query = em.createQuery("SELECT a FROM Accounts a WHERE a.accountNumber='" + accountNumber + "'", Accounts.class);
 		return query.getSingleResult();
 	}
+	
 	@Transactional(REQUIRED)
-	public void createAnAccount(Accounts newAccount) {
+	public boolean createAccount(Accounts newAccount) {
 		em.persist(newAccount);
+		return em.find(Accounts.class,newAccount.getAccountNumber())!= null ? true : false;
 	}
+	
 	@Transactional(REQUIRED)
-	public void updateAnAccount(Accounts newAccount, int idToChange) {
+	public boolean updateAccount(Accounts newAccount, int idToChange) {
 		Accounts oldAccount = em.find(Accounts.class, idToChange);
 		oldAccount.setFirstName(newAccount.getFirstName());
 		oldAccount.setSecondName(newAccount.getSecondName());
 		em.merge(oldAccount);
+		return em.find(Accounts.class,oldAccount.getAccountNumber())!= null ? true : false;
 	}
+	
 	@Transactional(REQUIRED)
-	public void deleteAccount(Accounts newAccount) {
-		em.remove(newAccount);
+	public boolean deleteAccount(int accountNumber) {
+		em.remove(em.find(Accounts.class, accountNumber));
+		return em.find(Accounts.class,em.contains(em.find(Accounts.class, accountNumber)))== null ? true : false;
 	}
 }
 
