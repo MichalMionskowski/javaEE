@@ -1,6 +1,8 @@
 package rest;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -23,11 +25,10 @@ public class AccountEndpoint {
 		return JSONUtil.getJSONForObject(service.findAccount(id));
 	}
 	
-	@Path("/operation")
+	@Path("/operations")
 	@GET
-	@Produces({ "application/json" })
-	public String findAccount() {
-		return JSONUtil.getJSONForObject(service.findAccounts());
+	public String getAccounts() {
+		return service.findAccounts();
 	}
 	
 	@Path("/operation")
@@ -45,7 +46,7 @@ public class AccountEndpoint {
 	}
 	
 	@Path("/operation/{id}")
-	@PUT
+	@DELETE
 	@Produces({ "application/json" })
 	public boolean deleteAccount(@PathParam("id") int id) {
 		return service.deleteAccount(id);

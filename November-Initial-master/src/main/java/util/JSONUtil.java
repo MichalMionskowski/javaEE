@@ -4,17 +4,17 @@ import com.google.gson.Gson;
 
 public class JSONUtil {
 
-	private static Gson gson;
+	private static Gson gson = new Gson();
 
 	public JSONUtil() {
 		this.gson = new Gson();
 	}
 
-	static  public String getJSONForObject(Object obj) {
+	  public static String getJSONForObject(Object obj) {
 		return gson.toJson(obj);
 	}
 
-	static public <T> T getObjectForJSON(String jsonString, Class<T> clazz) {
+	 public static <T> T getObjectForJSON(String jsonString, Class<T> clazz) {
 		return gson.fromJson(jsonString, clazz);
 	}
 

@@ -9,7 +9,7 @@ import javax.persistence.Id;
 @Entity
 public class Accounts {
 
-	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Id 
 	private Integer accountNumber;
 	public int getAccountNumber() {
 		return this.accountNumber;

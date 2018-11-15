@@ -3,7 +3,6 @@ package persistance.repository;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
-import java.util.List;
 
 import javax.enterprise.inject.Default;
 import javax.faces.bean.RequestScoped;
@@ -13,6 +12,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import persistance.domain.Accounts;
+import util.JSONUtil;
 
 @Default
 @Transactional(SUPPORTS)
@@ -23,7 +23,7 @@ public class AccountsDBRepository implements AccountRepository {
 	
 	public String getAllAccounts(){
 		TypedQuery<Accounts> query = em.createQuery("SELECT a FROM Accounts a", Accounts.class);
-		return query.toString();
+		return JSONUtil.getJSONForObject(query.getResultList());
 	}
 	
 	public Accounts findAccount(int accountNumber){

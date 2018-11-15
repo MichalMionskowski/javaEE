@@ -1,14 +1,12 @@
 package persistance.repository;
 
-import static javax.transaction.Transactional.TxType.REQUIRED;
-import static javax.transaction.Transactional.TxType.SUPPORTS;
+
 
 import java.util.HashMap;
 
 import javax.enterprise.inject.Alternative;
 import javax.faces.bean.SessionScoped;
-import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
+
 
 import persistance.domain.Accounts;
 
