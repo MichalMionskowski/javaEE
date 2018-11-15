@@ -5,41 +5,41 @@ package persistance.repository;
 import java.util.HashMap;
 
 import javax.enterprise.inject.Alternative;
-import javax.faces.bean.SessionScoped;
-
+import javax.faces.bean.ApplicationScoped;
 
 import persistance.domain.Accounts;
+import util.JSONUtil;
 
 @Alternative
-@SessionScoped
+@ApplicationScoped
 public class AccountsMapRepository implements AccountRepository{
-	HashMap<Integer,Accounts> accountsList = new HashMap<Integer,Accounts>();
+	static HashMap<Integer,Accounts> accountsList = new HashMap<Integer,Accounts>();
 	
 	public Accounts findAccount(int accountNumber) {
-		if(accountsList.containsKey(accountNumber)) {
-			return accountsList.get(accountNumber);
+		if(AccountsMapRepository.accountsList.containsKey(accountNumber)) {
+			return AccountsMapRepository.accountsList.get(accountNumber);
 		}
 		return null;
 	}
 
 
-	public boolean createAccount(Accounts newAccount) {
-		if(accountsList.containsKey(newAccount.getAccountNumber())) {
-			return false;
+	public String createAccount(Accounts newAccount) {
+		if(AccountsMapRepository.accountsList.containsKey(newAccount.getAccountNumber())) {
+			return "false";
 		}else {
-			accountsList.put(newAccount.getAccountNumber(), newAccount);
-			return true;
+			AccountsMapRepository.accountsList.put(newAccount.getAccountNumber(), newAccount);
+			return JSONUtil.getJSONForObject(AccountsMapRepository.accountsList.values());
 		}
 	}
 
 
 	public boolean updateAccount(Accounts updateAccount,int idToChange) {
-		if(accountsList.containsKey(idToChange)) {
-			Accounts oldAccount = accountsList.get(idToChange);
+		if(AccountsMapRepository.accountsList.containsKey(idToChange)) {
+			Accounts oldAccount = AccountsMapRepository.accountsList.get(idToChange);
 			oldAccount.setFirstName(updateAccount.getFirstName());
 			oldAccount.setSecondName(updateAccount.getSecondName());
-			accountsList.remove(idToChange);
-			accountsList.put(idToChange, oldAccount);
+			AccountsMapRepository.accountsList.remove(idToChange);
+			AccountsMapRepository.accountsList.put(idToChange, oldAccount);
 			return true;
 		}
 		return false;
@@ -47,8 +47,8 @@ public class AccountsMapRepository implements AccountRepository{
 
 
 	public boolean deleteAccount(int accountNumber) {
-		if(accountsList.containsKey(accountNumber)) {
-			accountsList.remove(accountNumber);
+		if(AccountsMapRepository.accountsList.containsKey(accountNumber)) {
+			AccountsMapRepository.accountsList.remove(accountNumber);
 			return true;
 		}else {
 			return false;
@@ -56,10 +56,9 @@ public class AccountsMapRepository implements AccountRepository{
 	}
 
 
-	@Override
+	
 	public String getAllAccounts() {
-		// TODO Auto-generated method stub
-		return null;
+		return JSONUtil.getJSONForObject(AccountsMapRepository.accountsList.values());
 	}
 
 }

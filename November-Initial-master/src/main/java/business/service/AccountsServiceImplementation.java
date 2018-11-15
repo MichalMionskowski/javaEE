@@ -22,7 +22,7 @@ public class AccountsServiceImplementation implements AccountService{
 	public String createAccount(String jsonString) {
 		Accounts newAccount = JSONUtil.getObjectForJSON(jsonString, Accounts.class);
 		if(newAccount.getAccountNumber() != 9999) {
-			return  repo.createAccount(JSONUtil.getObjectForJSON(jsonString, Accounts.class)) ?  "{\"message\":\"correct\"}": "{\"message\":\"something went wrong\"}" ;
+			return  repo.createAccount(JSONUtil.getObjectForJSON(jsonString, Accounts.class))  ;
 		}
 			return "{\"message\":\"This account is blocked\"}" ;
 	}

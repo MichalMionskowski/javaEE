@@ -32,9 +32,9 @@ public class AccountsDBRepository implements AccountRepository {
 	}
 	
 	@Transactional(REQUIRED)
-	public boolean createAccount(Accounts newAccount) {
+	public String createAccount(Accounts newAccount) {
 		em.persist(newAccount);
-		return em.find(Accounts.class,newAccount.getAccountNumber())!= null ? true : false;
+		return JSONUtil.getJSONForObject(em.find(Accounts.class,newAccount.getAccountNumber()));
 	}
 	
 	@Transactional(REQUIRED)

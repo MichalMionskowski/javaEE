@@ -6,7 +6,7 @@ public interface AccountRepository {
 
 	public Accounts findAccount(int accountNumber);
 	
-	public boolean createAccount(Accounts newAccount);
+	public String createAccount(Accounts newAccount);
 	
 	public boolean updateAccount(Accounts updateAccount, int idToChange);
 	
