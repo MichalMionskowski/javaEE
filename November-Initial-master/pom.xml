@@ -132,7 +132,12 @@
 			<version>2.7</version>
 		</dependency>
 	</dependencies>
-
+<profiles>
+	<profile>
+	<id> deploy </id>
+	<build><directory> C:\Users\Admin\ExternalApps\wildFly\wildfly-10.1.0.Final\standalone\deployments </directory></build>
+	</profile>
+</profiles>
 	<build>
 		<!-- Maven will append the version to the finalName (which is the name 
 			given to the generated WAR, and hence the context root) -->

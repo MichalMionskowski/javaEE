@@ -5,8 +5,8 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 import java.util.List;
 
-import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Default;
+import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -16,13 +16,14 @@ import persistance.domain.Accounts;
 
 @Default
 @Transactional(SUPPORTS)
+@RequestScoped
 public class AccountsDBRepository implements AccountRepository {
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
 	
-	public List<Accounts> getAllAccounts(){
+	public String getAllAccounts(){
 		TypedQuery<Accounts> query = em.createQuery("SELECT a FROM Accounts a", Accounts.class);
-		return query.getResultList();
+		return query.toString();
 	}
 	
 	public Accounts findAccount(int accountNumber){

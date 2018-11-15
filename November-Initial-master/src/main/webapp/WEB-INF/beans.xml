@@ -22,7 +22,7 @@
       http://xmlns.jcp.org/xml/ns/javaee
       http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd" bean-discovery-mode="all">
       
-     <alternatives>
-        <class>myEE.src.main.java.persistance.repository.AccountMapRepository</class>
-    </alternatives> 
+<!--      <alternatives> -->
+<!--         <class>src.main.java.persistance.repository.AccountsMapRepository</class> -->
+<!--     </alternatives>  -->
 </beans>

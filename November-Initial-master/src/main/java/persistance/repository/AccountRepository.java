@@ -11,4 +11,6 @@ public interface AccountRepository {
 	public boolean updateAccount(Accounts updateAccount, int idToChange);
 	
 	public boolean deleteAccount(int accountNumber);
+
+	public String getAllAccounts();
 }

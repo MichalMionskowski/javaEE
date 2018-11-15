@@ -1,4 +1,4 @@
-package susiness.service;
+package business.service;
 
 import javax.inject.Inject;
 
@@ -11,6 +11,8 @@ public class AccountsServiceImplementation implements AccountService{
 	@Inject
 	private AccountRepository repo;
 	
+	
+
 	@Override
 	public Accounts findAccount(int accountNumber) {
 		return repo.findAccount(accountNumber);
@@ -33,6 +35,11 @@ public class AccountsServiceImplementation implements AccountService{
 	@Override
 	public boolean deleteAccount(int id) {
 		return repo.deleteAccount(id);
+	}
+
+	@Override
+	public String findAccounts() {
+		return repo.getAllAccounts();
 	}
 
 }

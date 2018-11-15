@@ -1,4 +1,4 @@
-package susiness.service;
+package business.service;
 
 import persistance.domain.Accounts;
 
@@ -11,4 +11,6 @@ public interface AccountService {
 	public boolean updateAccount(int id, String account);
 	
 	public boolean deleteAccount(int id);
+
+	public String findAccounts();
 }

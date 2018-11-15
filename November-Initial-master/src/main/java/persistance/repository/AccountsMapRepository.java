@@ -6,37 +6,36 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 import java.util.HashMap;
 
 import javax.enterprise.inject.Alternative;
-import javax.inject.Inject;
-import javax.persistence.PersistenceContext;
+import javax.faces.bean.SessionScoped;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
 import persistance.domain.Accounts;
 
 @Alternative
-@Transactional(SUPPORTS)
+@SessionScoped
 public class AccountsMapRepository implements AccountRepository{
 	HashMap<Integer,Accounts> accountsList = new HashMap<Integer,Accounts>();
 	
-	public Accounts findAccount(@NotNull int accountNumber) {
+	public Accounts findAccount(int accountNumber) {
 		if(accountsList.containsKey(accountNumber)) {
 			return accountsList.get(accountNumber);
 		}
 		return null;
 	}
 
-	@Transactional(REQUIRED)
-	public boolean createAccount(@NotNull Accounts newAccount) {
+
+	public boolean createAccount(Accounts newAccount) {
 		if(accountsList.containsKey(newAccount.getAccountNumber())) {
 			return false;
 		}else {
 			accountsList.put(newAccount.getAccountNumber(), newAccount);
-			return accountsList.containsKey(newAccount.getAccountNumber()) ? true : false;
+			return true;
 		}
 	}
 
-	@Transactional(REQUIRED)
-	public boolean updateAccount(@NotNull Accounts updateAccount,@NotNull int idToChange) {
+
+	public boolean updateAccount(Accounts updateAccount,int idToChange) {
 		if(accountsList.containsKey(idToChange)) {
 			Accounts oldAccount = accountsList.get(idToChange);
 			oldAccount.setFirstName(updateAccount.getFirstName());
@@ -48,14 +47,21 @@ public class AccountsMapRepository implements AccountRepository{
 		return false;
 	}
 
-	@Transactional(REQUIRED)
-	public boolean deleteAccount(@NotNull int accountNumber) {
+
+	public boolean deleteAccount(int accountNumber) {
 		if(accountsList.containsKey(accountNumber)) {
 			accountsList.remove(accountNumber);
 			return true;
 		}else {
 			return false;
 		}
+	}
+
+
+	@Override
+	public String getAllAccounts() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
